@@ -19,7 +19,7 @@ import { db } from "./firebase.js";
 
 // GANTI dengan nomor WhatsApp EzzTify kamu.
 // Format: 628xxxxxxxxxx
-const NOMOR_WHATSAPP = "628xxxxxxxxxx";
+const NOMOR_WHATSAPP = "6288216358530";
 
 
 /* =========================================================
