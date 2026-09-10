@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>EzzTify — Admin</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+  <!-- ================= LOGIN ================= -->
+
+  <section id="loginPage" class="login-page">
+
+    <div class="login-decoration decoration-one"></div>
+    <div class="login-decoration decoration-two"></div>
+
+    <div class="login-card">
+
+      <div class="brand">
+        <span class="brand-ezz">Ezz</span><span class="brand-tify">Tify</span>
+      </div>
+
+      <p class="login-label">ADMIN PANEL</p>
+
+      <h1>Welcome back.</h1>
+
+      <p class="login-description">
+        Kelola semua template digital EzzTify dari satu tempat.
+      </p>
+
+      <form id="loginForm">
+
+        <div class="input-group">
+          <label for="email">Email</label>
+
+          <input
+            type="email"
+            id="email"
+            placeholder="admin@example.com"
+            required
+          >
+        </div>
+
+        <div class="input-group">
+          <label for="password">Password</label>
+
+          <input
+            type="password"
+            id="password"
+            placeholder="••••••••"
+            required
+          >
+        </div>
+
+        <button type="submit" class="primary-button">
+          Masuk ke Dashboard
+        </button>
+
+        <p id="loginError" class="error-message"></p>
+
+      </form>
+
+      <a href="index.html" class="back-home">
+        ← Kembali ke website
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= DASHBOARD ================= -->
+
+  <section id="dashboardPage" class="dashboard-page hidden">
+
+    <header class="admin-header">
+
+      <div class="admin-brand">
+        <span class="brand-ezz">Ezz</span><span class="brand-tify">Tify</span>
+        <span class="admin-badge">ADMIN</span>
+      </div>
+
+      <div class="header-actions">
+
+        <a href="index.html" class="view-site">
+          Lihat Website ↗
+        </a>
+
+        <button id="logoutButton" class="logout-button">
+          Keluar
+        </button>
+
+      </div>
+
+    </header>
+
+
+    <main class="dashboard-container">
+
+      <!-- HEADER -->
+
+      <div class="dashboard-heading">
+
+        <div>
+          <p class="small-label">DASHBOARD</p>
+
+          <h1>
+            Kelola <span>Templates.</span>
+          </h1>
+
+          <p>
+            Tambahkan dan kelola template digital EzzTify.
+          </p>
+        </div>
+
+        <button id="addTemplateButton" class="add-button">
+          + Tambah Template
+        </button>
+
+      </div>
+
+
+      <!-- STATISTICS -->
+
+      <div class="stats-grid">
+
+        <div class="stat-card">
+          <div class="stat-icon">✦</div>
+
+          <div>
+            <p>Total Template</p>
+            <strong id="totalTemplates">0</strong>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon active-icon">●</div>
+
+          <div>
+            <p>Template Aktif</p>
+            <strong id="activeTemplates">0</strong>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon inactive-icon">○</div>
+
+          <div>
+            <p>Template Nonaktif</p>
+            <strong id="inactiveTemplates">0</strong>
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- TEMPLATE LIST -->
+
+      <div class="template-section">
+
+        <div class="section-heading">
+
+          <div>
+            <p class="small-label">COLLECTION</p>
+            <h2>Semua Template</h2>
+          </div>
+
+          <div class="template-count">
+            <span id="templateCount">0</span> template
+          </div>
+
+        </div>
+
+        <div id="templateList" class="template-list">
+
+          <div class="empty-state">
+
+            <div class="empty-icon">✦</div>
+
+            <h3>Belum ada template</h3>
+
+            <p>
+              Tambahkan template pertama EzzTify kamu.
+            </p>
+
+            <button id="emptyAddButton" class="add-button">
+              + Tambah Template
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+
+  </section>
+
+
+  <!-- ================= TEMPLATE MODAL ================= -->
+
+  <div id="templateModal" class="modal hidden">
+
+    <div class="modal-overlay"></div>
+
+    <div class="modal-card">
+
+      <div class="modal-header">
+
+        <div>
+          <p class="small-label">TEMPLATE</p>
+          <h2 id="modalTitle">Tambah Template</h2>
+        </div>
+
+        <button id="closeModalButton" class="close-button">
+          ×
+        </button>
+
+      </div>
+
+
+      <form id="templateForm">
+
+        <input type="hidden" id="editingId">
+
+
+        <!-- BASIC -->
+
+        <div class="form-section">
+
+          <h3>Informasi Dasar</h3>
+
+          <div class="form-grid">
+
+            <div class="input-group">
+              <label>Kode Template</label>
+
+              <input
+                type="text"
+                id="kode"
+                placeholder="EZ001"
+                disabled
+              >
+
+              <small>
+                Kode dibuat otomatis oleh sistem.
+              </small>
+            </div>
+
+            <div class="input-group">
+              <label>Nama Template</label>
+
+              <input
+                type="text"
+                id="nama"
+                placeholder="A Movie About You"
+                required
+              >
+            </div>
+
+          </div>
+
+
+          <div class="form-grid">
+
+            <div class="input-group">
+              <label>Link Preview Website</label>
+
+              <input
+                type="url"
+                id="preview"
+                placeholder="https://..."
+                required
+              >
+            </div>
+
+            <div class="input-group">
+              <label>Harga</label>
+
+              <input
+                type="number"
+                id="harga"
+                placeholder="35000"
+                min="0"
+                required
+              >
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- THEME -->
+
+        <div class="form-section">
+
+          <h3>Tema</h3>
+
+          <div id="temaOptions" class="checkbox-grid">
+
+            <label>
+              <input type="checkbox" value="Romantis">
+              Romantis
+            </label>
+
+            <label>
+              <input type="checkbox" value="Sweet">
+              Sweet
+            </label>
+
+            <label>
+              <input type="checkbox" value="Cinematic">
+              Cinematic
+            </label>
+
+            <label>
+              <input type="checkbox" value="Modern">
+              Modern
+            </label>
+
+            <label>
+              <input type="checkbox" value="Aesthetic">
+              Aesthetic
+            </label>
+
+            <label>
+              <input type="checkbox" value="Dreamy">
+              Dreamy
+            </label>
+
+            <label>
+              <input type="checkbox" value="Fun & Playful">
+              Fun & Playful
+            </label>
+
+            <label>
+              <input type="checkbox" value="Dark">
+              Dark
+            </label>
+
+            <label>
+              <input type="checkbox" value="Nature">
+              Nature
+            </label>
+
+            <label>
+              <input type="checkbox" value="Elegant">
+              Elegant
+            </label>
+
+            <label>
+              <input type="checkbox" value="Cute">
+              Cute
+            </label>
+
+            <label>
+              <input type="checkbox" value="Minimalist">
+              Minimalist
+            </label>
+
+          </div>
+
+        </div>
+
+
+        <!-- UNTUK SIAPA -->
+
+        <div class="form-section">
+
+          <h3>Untuk Siapa?</h3>
+
+          <div id="untukOptions" class="checkbox-grid">
+
+            <label>
+              <input type="checkbox" value="Pacar">
+              Pacar
+            </label>
+
+            <label>
+              <input type="checkbox" value="Sahabat">
+              Sahabat
+            </label>
+
+            <label>
+              <input type="checkbox" value="Keluarga">
+              Keluarga
+            </label>
+
+            <label>
+              <input type="checkbox" value="Teman">
+              Teman
+            </label>
+
+            <label>
+              <input type="checkbox" value="Orang Spesial">
+              Orang Spesial
+            </label>
+
+            <label>
+              <input type="checkbox" value="Lainnya">
+              Lainnya
+            </label>
+
+          </div>
+
+        </div>
+
+
+        <!-- ACARA -->
+
+        <div class="form-section">
+
+          <h3>Acara / Konten</h3>
+
+          <div id="acaraOptions" class="checkbox-grid">
+
+            <label>
+              <input type="checkbox" value="Birthday">
+              Birthday
+            </label>
+
+            <label>
+              <input type="checkbox" value="Anniversary">
+              Anniversary
+            </label>
+
+            <label>
+              <input type="checkbox" value="Graduation">
+              Graduation
+            </label>
+
+            <label>
+              <input type="checkbox" value="Valentine">
+              Valentine
+            </label>
+
+            <label>
+              <input type="checkbox" value="Friendship">
+              Friendship
+            </label>
+
+            <label>
+              <input type="checkbox" value="Congratulations">
+              Congratulations
+            </label>
+
+            <label>
+              <input type="checkbox" value="Thank You">
+              Thank You
+            </label>
+
+            <label>
+              <input type="checkbox" value="Apology">
+              Apology
+            </label>
+
+            <label>
+              <input type="checkbox" value="Farewell">
+              Farewell
+            </label>
+
+            <label>
+              <input type="checkbox" value="Other">
+              Other
+            </label>
+
+          </div>
+
+        </div>
+
+
+        <!-- FITUR -->
+
+        <div class="form-section">
+
+          <h3>Fitur</h3>
+
+          <div id="fiturOptions" class="checkbox-grid">
+
+            <label>
+              <input type="checkbox" value="Custom Nama">
+              Custom Nama
+            </label>
+
+            <label>
+              <input type="checkbox" value="Custom Pesan">
+              Custom Pesan
+            </label>
+
+            <label>
+              <input type="checkbox" value="Foto">
+              Foto
+            </label>
+
+            <label>
+              <input type="checkbox" value="Musik">
+              Musik
+            </label>
+
+            <label>
+              <input type="checkbox" value="Animasi">
+              Animasi
+            </label>
+
+            <label>
+              <input type="checkbox" value="Video">
+              Video
+            </label>
+
+            <label>
+              <input type="checkbox" value="Link Website">
+              Link Website
+            </label>
+
+            <label>
+              <input type="checkbox" value="Timer">
+              Timer
+            </label>
+
+            <label>
+              <input type="checkbox" value="Quiz / Interaktif">
+              Quiz / Interaktif
+            </label>
+
+          </div>
+
+        </div>
+
+
+        <!-- STATUS -->
+
+        <div class="form-section">
+
+          <h3>Status</h3>
+
+          <select id="status">
+
+            <option value="aktif">
+              Aktif — tampil di website
+            </option>
+
+            <option value="nonaktif">
+              Nonaktif — disembunyikan
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- ACTION -->
+
+        <div class="modal-actions">
+
+          <button
+            type="button"
+            id="cancelButton"
+            class="cancel-button"
+          >
+            Batal
+          </button>
+
+          <button
+            type="submit"
+            class="primary-button"
+          >
+            Simpan Template
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <script type="module" src="admin.js"></script>
+
+</body>
+</html>
